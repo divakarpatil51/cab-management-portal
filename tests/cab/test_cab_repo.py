@@ -14,3 +14,12 @@ class TestCabRepo:
 
         cab_repo.insert_initial_data(initial_data)
         assert len(cab_repo.vehicles) == len(initial_data)
+
+    def test_register_cab(self):
+        cab_data = {
+            "cab_id": 1,
+            "city_id": 1
+        }
+
+        actual_response = cab_repo.register_cab(cab_data)
+        assert cab_repo.vehicles[-1].get_json() == actual_response

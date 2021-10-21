@@ -9,3 +9,9 @@ cab_blueprint = Blueprint("cab_blueprint", __name__, url_prefix="/rest/v1/cab")
 def insert_initial_data():
     response = cab_service.insert_initial_data(request.json)
     return jsonify(response), 201
+
+
+@cab_blueprint.route("", methods=["POST"])
+def register_cab():
+    response = cab_service.register_cab(request.json)
+    return jsonify(response), 201
