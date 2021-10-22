@@ -28,6 +28,12 @@ def update_cab_status(cab_id):
     return jsonify(response), 200
 
 
+@cab_blueprint.route("/book-cab", methods=['POST'])
+def book_cab():
+    booking_status = cab_service.book_cab(request.json)
+    return jsonify(booking_status), 200
+
+
 @cab_blueprint.route("", methods=['GET'])
 def get_cabs():
     return jsonify(cab_service.get_cabs())

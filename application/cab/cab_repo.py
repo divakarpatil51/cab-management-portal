@@ -2,7 +2,7 @@ import logging
 
 from .vehicle import Vehicle
 from .cab_status import CabStatus
-from typing import Dict
+from typing import Dict, List
 from werkzeug.exceptions import BadRequest, NotFound
 
 vehicles: Dict = {}
@@ -43,13 +43,16 @@ def update_location(cab_id, data):
 def update_cab_status(cab_id, data):
     global vehicles
 
-    if cab_id in vehicles:
-        vehicles[cab_id].current_status = data['current_status']
-        return vehicles[cab_id].get_json()
-    else:
+    if cab_id not in vehicles:
         raise NotFound("Cab with given cab id not found")
 
+    old_status = vehicles[cab_id].current_status
+    vehicles[cab_id].current_status = data['current_status']
+    if old_status != data['current_status'] and data['current_status'] == CabStatus.IDLE.value:
+        vehicles[cab_id].update_trips_completed()
+    return vehicles[cab_id].get_json()
 
-def get_cabs():
+
+def get_cabs() -> List[Vehicle]:
     global vehicles
     return [vehicle.get_json() for vehicle in vehicles.values()]
