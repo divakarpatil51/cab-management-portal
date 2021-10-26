@@ -5,30 +5,35 @@ from application.cab.cab_service import insert_initial_data, register_cab
 class TestCabService:
 
     @mock.patch("application.cab.cab_service.cab_repo.insert_initial_data")
-    def test_insert_initial_data(self, insert_initial_data_mock):
+    @mock.patch("application.cab.cab_service.location_service.insert_locations_in_batch")
+    def test_insert_initial_data(self, insert_initial_data_mock, location_service_mock):
         initial_data = [
             {
                 "cab_id": 1,
                 "cab_state": "IDLE",
-                "city_id": 1
+                "location_id": 1
             }
         ]
+        location_data = [{
+            'location_id': 1
+        }]
+        location_service_mock.return_value = location_data
         resp = insert_initial_data(initial_data)
 
         assert resp == "Cab Data Inserted Successfully"
 
-        insert_initial_data_mock.assert_called_once_with(cab_data=initial_data)
+        insert_initial_data_mock.assert_called_once_with(location_data=location_data)
 
     @mock.patch("application.cab.cab_service.cab_repo.register_cab")
     def test_register_cab(self, register_cab_mock):
         cab_data = {
             "cab_id": 1,
-            "city_id": 1,
+            "location_id": 1,
             "registration_number": 1,
         }
         expected_resp = {
             "cab_id": 1,
-            "city_id": 1,
+            "location_id": 1,
             "current_status": "IDLE",
             "registration_number": 1,
         }

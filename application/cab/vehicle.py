@@ -1,14 +1,27 @@
+import dataclasses
+import time
+from typing import List
+
+from application.cab.cab_status import CabStatus
+from application.cab.trip import Trip
+from application.location.location import Location
+
+
+@dataclasses.dataclass
 class Vehicle:
+    vehicle_id: str
+    location: Location
+    current_status: CabStatus
+    trips: List[Trip] = dataclasses.field(default_factory=list)
+    registration_number: str = None
 
-    def __init__(self, vehicle_id, city_id, current_status, registration_number=None):
-        self.vehicle_id = vehicle_id
-        self.city_id = city_id
-        self.current_status = current_status
-        self.registration_number = registration_number
-        self.trips_completed = 0
-
-    def update_trips_completed(self):
-        self.trips_completed += 1
+    def create_new_trip(self):
+        trip = Trip(start_time=time.time())
+        self.trips.append(trip)
 
     def get_json(self):
-        return vars(self)
+        return {
+            "vehicle_id": self.vehicle_id,
+            "location": self.location.location_id if self.location else None,
+            "current_status": self.current_status.value,
+        }

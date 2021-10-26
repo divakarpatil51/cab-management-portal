@@ -7,9 +7,9 @@ class TestCabController:
     def test_insert_initial_data(self, insert_initial_data_mock, client):
         initial_data = [
             {
-                "cab_id": 1,
+                "cab_id": '1',
                 "cab_state": "IDLE",
-                "city_id": 1
+                "location_id": '1'
             }
         ]
         expected_response = "Cab Data Inserted Successfully"
@@ -23,15 +23,15 @@ class TestCabController:
     @mock.patch("application.cab.cab_controller.cab_service.register_cab")
     def test_register_cab(self, register_cab_mock, client):
         cab_data = {
-            "cab_id": 1,
-            "city_id": 1,
-            "registration_number": 1
+            "cab_id": '1',
+            "location_id": '1',
+            "registration_number": '1'
         }
         expected_response = {
             "current_status": "IDLE",
-            "city_id": 1,
-            "registration_number": 1,
-            "vehicle_id": 1
+            "location_id": '1',
+            "registration_number": '1',
+            "vehicle_id": '1'
         }
         register_cab_mock.return_value = expected_response
         actual_response = client.post("/rest/v1/cab", json=cab_data)
