@@ -9,7 +9,7 @@ def insert_location(location_data: Dict) -> str:
     if location_repo.does_location_exist(location_id=location_data['location_id']):
         raise BadRequest("Location already exists")
     location_repo.insert_location(location_data=location_data)
-    return f"Inserted location with id {location_data.get('location_id')} successfully"
+    return "Inserted location successfully"
 
 
 def insert_locations_in_batch(location_data: List[Dict]) -> str:

@@ -37,3 +37,8 @@ def book_cab():
 @cab_blueprint.route("", methods=['GET'])
 def get_cabs():
     return jsonify(cab_service.get_cabs())
+
+
+@cab_blueprint.route("/<int:cab_id>/history", methods=["GET"])
+def cab_history(cab_id):
+    return jsonify(cab_service.get_cab_history(cab_id))

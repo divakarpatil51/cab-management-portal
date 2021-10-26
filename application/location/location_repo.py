@@ -1,6 +1,6 @@
 from typing import List, Dict
+
 from .location import Location
-from werkzeug.exceptions import NotFound
 
 locations: List = []
 

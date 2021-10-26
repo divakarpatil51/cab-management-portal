@@ -3,7 +3,7 @@ import time
 from typing import List
 
 from application.cab.cab_status import CabStatus
-from application.cab.trip import Trip
+from application.cab.trip import Trip, TripStatusEnum
 from application.location.location import Location
 
 
@@ -24,4 +24,8 @@ class Vehicle:
             "vehicle_id": self.vehicle_id,
             "location": self.location.location_id if self.location else None,
             "current_status": self.current_status.value,
+            "trips": [trip.to_json() for trip in self.trips]
         }
+
+    def trip_completed(self):
+        self.trips[-1].update_status(TripStatusEnum.COMPLETED)

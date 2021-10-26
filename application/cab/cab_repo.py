@@ -15,7 +15,8 @@ def insert_initial_data(cab_data):
     global vehicles
     vehicles = {vehicle['cab_id']: Vehicle(vehicle_id=vehicle['cab_id'],
                                            location=location_repo.get_location_by_id(vehicle.get('location_id', None)),
-                                           current_status=CabStatus.get_status(vehicle['cab_state'])) for vehicle in cab_data}
+                                           current_status=CabStatus.get_status(vehicle['cab_state'])) for vehicle in
+                cab_data}
 
 
 def register_cab(cab_details):
@@ -47,10 +48,11 @@ def update_cab_status(cab_id, data):
     if cab_id not in vehicles:
         raise NotFound("Cab with given cab id not found")
 
-    # old_status = vehicles[cab_id].current_status
-    # vehicles[cab_id].current_status = data['current_status']
-    # if old_status != data['current_status'] and data['current_status'] == CabStatus.IDLE.value:
-    #     vehicles[cab_id].update_trips_completed()
+    old_status = vehicles[cab_id].current_status
+    current_status = CabStatus.get_status(data['current_status'])
+    vehicles[cab_id].current_status = current_status
+    if old_status != current_status and data['current_status'] == CabStatus.IDLE.value:
+        vehicles[cab_id].trip_completed()
     return vehicles[cab_id].get_json()
 
 
@@ -69,3 +71,10 @@ def update_cab_trip(vehicle_id: str, assigned_cab: Vehicle):
     global vehicles
     vehicles[vehicle_id] = assigned_cab
     return vehicles[vehicle_id].get_json()
+
+
+def get_cab_by_id(cab_id):
+    global vehicles
+    if cab_id not in vehicles:
+        raise NotFound("Cab id not found")
+    return vehicles[cab_id]

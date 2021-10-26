@@ -52,3 +52,8 @@ def book_cab(booking_details: Dict) -> Union[str, Dict]:
     assigned_cab.location = location_service.get_location_by_id(location_id=booking_details['next_location_id'])
     assigned_cab = cab_repo.update_cab_trip(assigned_cab.vehicle_id, assigned_cab)
     return assigned_cab
+
+
+def get_cab_history(cab_id):
+    cab = cab_repo.get_cab_by_id(cab_id)
+    return cab.get_json()
