@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "9abdbf49-c19f-431d-a4ff-bdda97ea869a",
+		"name": "Cab Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Insert Initial Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"cab_id\": 1,\n        \"cab_state\": \"ON_TRIP\"\n    },\n    {\n        \"cab_id\": 2,\n        \"cab_state\": \"IDLE\",\n        \"location_id\": 2\n    },\n    {\n        \"cab_id\": 3,\n        \"cab_state\": \"IDLE\",\n        \"location_id\": 1\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/rest/v1/cab/insert-bulk",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"v1",
+						"cab",
+						"insert-bulk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Fetch all cabs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/rest/v1/cab",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"v1",
+						"cab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Insert New Cab",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cab_id\": 4,\n    \"location_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/rest/v1/cab",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"v1",
+						"cab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Insert New Location",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location_id\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/rest/v1/location",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"v1",
+						"location"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Book Cab",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"current_location_id\": 1,\n    \"next_location_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/rest/v1/cab/book-cab",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"v1",
+						"cab",
+						"book-cab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Update Cab Location",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/rest/v1/cab/2/update-location",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"v1",
+						"cab",
+						"2",
+						"update-location"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Update Cab Status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"current_status\": \"IDLE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/rest/v1/cab/3/update-status",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"rest",
+						"v1",
+						"cab",
+						"3",
+						"update-status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
